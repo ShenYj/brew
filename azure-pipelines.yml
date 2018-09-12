@@ -1,0 +1,18 @@
+jobs:
+- job: macOS
+  pool:
+    vmImage: xcode9-macos10.13
+  steps:
+    - bash: brew prune; brew test-bot
+      displayName: brew test-bot
+      env:
+        HOMEBREW_GITHUB_API_TOKEN: $(github.publicApiToken)
+        HOMEBREW_LANGUAGES: en-GB
+- job: Linux
+  pool:
+    vmImage: ubuntu-16.04
+  steps:
+    - bash: sudo rm -rf /usr/local/include/node; export PATH="$PWD/bin:$PATH"; brew test-bot
+      displayName: brew test-bot
+      env:
+        HOMEBREW_GITHUB_API_TOKEN: $(github.publicApiToken)
